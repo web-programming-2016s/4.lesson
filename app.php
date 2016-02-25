@@ -1,14 +1,19 @@
 <?php
 
+	$everything_was_okay = true;
+
 	//*********************
 	// TO field validation
 	//*********************
 	if(isset($_GET["to"])){ //if there is ?to= in the URL
 		if(empty($_GET["to"])){ //if it is empty
+			$everything_was_okay = false; //empty
 			echo "Please enter the recipient! <br>"; // yes it is empty
 		}else{
 			echo "To: ".$_GET["to"]."<br>"; //no it is not empty
 		}
+	}else{
+		$everything_was_okay = false; // do not exist
 	}
 
 	//check if there is variable in the URL
@@ -20,6 +25,7 @@
 		//if its empty
 		if(empty($_GET["message"])){
 			//it is empty
+			$everything_was_okay = false;
 			echo "Please enter the message! <br>";
 		}else{
 			//its not empty
@@ -28,17 +34,22 @@
 		
 	}else{
 		//echo "there is no such thing as message";
+		$everything_was_okay = false;
 	}
 	
 	
 	
-	//Getting the message from address
-	// if there is ?name= .. then $_GET["name"]
-	//$my_message = $_GET["message"];
-	//$to = $_GET["to"];
+	/***********************
+	**** SAVE TO DB ********
+	***********************/
 	
+	// ? was everything okay
+	if($everything_was_okay == true){
+		
+		echo "Saving to database ...";
+		
+	}
 	
-	//echo "My message is ".$my_message." and is to ".$to;
 	
 
 ?>
