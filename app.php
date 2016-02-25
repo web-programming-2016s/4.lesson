@@ -1,5 +1,9 @@
 <?php
 
+	// require another php file
+	// ../../../ => 3 folders back
+	require_once("../../../config.php");
+
 	$everything_was_okay = true;
 
 	//*********************
@@ -46,7 +50,39 @@
 	// ? was everything okay
 	if($everything_was_okay == true){
 		
-		echo "Saving to database ...";
+		echo "Saving to database ... ";
+		
+		
+		//connection with username and password
+		//access username from config
+		//echo $db_username;
+		
+		// 1 servername
+		// 2 username
+		// 3 password
+		// 4 database
+		$mysql = new mysqli("localhost", $db_username, $db_password, "webpr2016_romil");
+		
+		$stmt = $mysql->prepare("INSERT INTO messages_sample (recipient, message) VALUES (?,?)");
+			
+		//echo error
+		echo $mysql->error;
+		
+		// we are replacing question marks with values
+		// s - string, date or smth that is based on characters and numbers
+		// i - integer, number
+		// d - decimal, float
+		
+		//for each question mark its type with one letter
+		$stmt->bind_param("ss", $_GET["to"], $_GET["message"]);
+		
+		//save
+		if($stmt->execute()){
+			echo "saved sucessfully";
+		}else{
+			echo $stmt->error;
+		}
+		
 		
 	}
 	
